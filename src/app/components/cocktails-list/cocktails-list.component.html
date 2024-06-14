@@ -1,0 +1,29 @@
+<div class="filter-container">
+    <h4>Filters</h4>
+    <label for="cocktailName">Cocktail name</label>
+    <input id="cocktailName" [(ngModel)]="cocktailName" name="cocktailName" type="search" />
+</div>
+<div class="list-container" *ngIf="cocktails$ | async as cocktails">
+    <ng-container *ngFor="let cocktail of cocktails | filterByKey : cocktailName : 'name';">
+        <ng-container [ngTemplateOutlet]="cardTemplate" [ngTemplateOutletContext] ="{cocktail}"></ng-container>
+    </ng-container>
+</div>
+
+<ng-template #cardTemplate let-cocktail="cocktail">
+    <div class="card-container">
+        <img *ngIf="cocktail?.['imageUrl']" [src]="cocktail?.['imageUrl']" [alt]="cocktail['name']"/>
+        <div>
+            <span [id]="'star-'+cocktail['id']" class="icon-star" [class.active]="bookmarkedIds.includes(cocktail['id'])" (click)="addBookmark(cocktail['id'])">
+            </span>
+            <h3 class="margin-0">
+                <a [routerLink]="['/cocktails', cocktail['id']]">{{cocktail['name']}}</a>
+            </h3>
+            <p class="badge" [class]="cocktail['isAlcoholic'] ? 'alcoholic' : 'non-alcoholic'">{{cocktail['isAlcoholic'] ? 'Alcoholic' : 'Non alcoholic'}}</p>
+            <p class="margin-0 fs-0-7">
+                <ng-container *ngFor="let ingredient of cocktail['ingredients']; let last = last">
+                    {{!last ? (ingredient + ' | ') : ingredient}}
+                </ng-container>
+            </p>
+        </div>
+    </div>
+</ng-template>

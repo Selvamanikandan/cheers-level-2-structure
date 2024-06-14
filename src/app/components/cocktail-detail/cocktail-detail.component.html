@@ -1,0 +1,29 @@
+<div class="detail-container">
+    <a [routerLink]="['/cocktails']"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg> Back</a>
+    <div class="card-detail-container" *ngIf="cocktailDetail$ | async as cocktail;">
+        <img *ngIf="cocktail?.['imageUrl']" [src]="cocktail?.['imageUrl']" [alt]="cocktail['name']"/>
+        <div>
+            <h3 class="margin-0">
+                {{cocktail['name']}}
+                <span [id]="'star-'+cocktail['id']" class="icon-star" [class.active]="bookmarkedIds.includes(cocktail['id'])" (click)="addBookmark(cocktail['id'])">
+                </span>
+            </h3>
+            <div>
+                <div>
+                    <span>Type: </span>
+                    <p class="badge" [class]="cocktail['isAlcoholic'] ? 'alcoholic' : 'non-alcoholic'">{{cocktail['isAlcoholic'] ? 'Alcoholic' : 'Non alcoholic'}}</p>
+                </div>
+                <div>
+                    <span>Ingredients: </span>
+                    <ul>
+                        <li *ngFor="let ingredient of cocktail['ingredients']">{{ingredient}}</li>
+                    </ul>
+                </div>
+                <div>
+                    <span>Instructions: </span>
+                    <span>{{cocktail['instructions']}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
