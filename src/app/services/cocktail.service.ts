@@ -31,10 +31,10 @@ export class CocktailService {
   }
 
   getAllCocktails(): Observable<ICocktail[]> {
-    return this.http.get<ICocktail[]>('/cockails')
+    return this.http.get<ICocktail[]>('/cocktails')
   }
 
-  getCocktailById(id: string): Observable<ICocktail> {
-    return this.http.get<ICocktail>(`/cockails/${id}`)
+  getCocktailById(cocktailId: string): Observable<ICocktail> {
+    return this.http.get<ICocktail>(`/cocktails/${cocktailId}`)
   }
 }
